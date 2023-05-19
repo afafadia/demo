@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import About from "./components/About";
 import AddTask from "./components/AddTask";
+import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
 
@@ -84,18 +87,32 @@ function App() {
                     setShowAddTask(!showAddTask);
                 }}
             />
-            {showAddTask && <AddTask onAddTask={addTask} />}
-            {tasks.length > 0 ? (
-                <Tasks
-                    tasks={tasks}
-                    onDelete={deleteTask}
-                    onToggle={toggleReminder}
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <>
+                            {showAddTask && <AddTask onAddTask={addTask} />}
+                            {tasks.length > 0 ? (
+                                <Tasks
+                                    tasks={tasks}
+                                    onDelete={deleteTask}
+                                    onToggle={toggleReminder}
+                                />
+                            ) : (
+                                <h3
+                                    className="task"
+                                    style={{ cursor: "initial" }}
+                                >
+                                    Task list - Empty !
+                                </h3>
+                            )}
+                        </>
+                    }
                 />
-            ) : (
-                <h3 className="task" style={{ cursor: "initial" }}>
-                    Task list - Empty !
-                </h3>
-            )}
+                <Route path="/about" element={<About />} />
+            </Routes>
+            <Footer />
         </div>
     );
 }
